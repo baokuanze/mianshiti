@@ -1,0 +1,241 @@
+竞技世界
+1:实现一个洗牌算法，int cards【52】；该数组存着0到51，使其完全打乱，不可以使用随机数。
+#include <iostream>
+static int a[56];
+int main()
+{
+    char input;
+    for(int i = 0; i < 52; ++i)
+         a[i] = i + 1;   
+    while(std::cin >> input)
+    {
+         for(int i = 0; i < 51; ++i)
+             for(int j = 0; j <= i; ++j)
+             {
+                  if(a[j] + a[j+1] % 2)
+                  {
+                       int temp;
+                       temp = a[j + 1];
+                       a[j + 1] = a[j];
+                       a[j] = temp;   
+                  }   
+             }
+         for(int i = 0; i < 52; ++i)
+             std::cout << a[i] << " ";
+         std::cout << std::endl;      
+    }
+}
+2:写一个函数找出一个整数数组中第二大的值。
+	const int MIN=-1;
+	int findSecond(int data[],int count)
+	{
+	    int maxnumber=data[0];
+	    int sec_max=MIN;
+	    int i;
+	    for (i=0; i<count; i++) {
+	        //若是比他大，则将上一次的大值给他
+	        if (data[i]>maxnumber) {
+	            sec_max=maxnumber;
+	            maxnumber=data[i];
+	        }else if (data[i]<maxnumber)
+	        {
+	            if (data[i]>sec_max) {
+	                sec_max=data[i];
+	            }
+	        }
+	    }
+	    return sec_max;
+	}
+	测试如下
+	    int a[] = {5,4,2,5,4};
+	    int n = sizeof(a) / sizeof(a[0]);
+	    int num = findSecond(a, n);
+	    printf("%d\n", num);
+
+3:实现一个快排的算法。
+    #include <iostream>  
+    using namespace std;    
+    int a[] = {100,8,15 ,37,26,13,27,49,55,14};    
+    void quick_sort(int a[], int left, int right)  
+    {  
+        if(left<right)  
+        {  
+        int i = left;  
+        int j = right;  
+        int x = a[i];  
+      
+        while(i<j)  
+        {  
+            while(i<j&&a[j]>x)  
+                j--;  
+            if(i<j){  
+                a[i] = a[j];  
+                i++;  
+            }  
+            while(i<j&&a[i]<x)  
+                i++;  
+            if(i<j){  
+             a[j] = a[i];  
+             j--;  
+            }  
+        }  
+        a[i] = x;  
+        quick_sort(a, left, i-1);  
+        quick_sort(a, i+1, right);  
+        }  
+    }  
+    int main()  
+    {  
+        cout<<"Before sort: ";  
+        for(int i =0 ; i<10;i++)  
+            cout<<a[i]<<" ";  
+        cout<<endl;  
+        quick_sort(a, 0, 9);  
+        cout<<"After sort: ";  
+        for(int i =0 ; i<10;i++)  
+            cout<<a[i]<<" ";  
+        cout<<endl;  
+    }  
+4:请计算sizeof的值
+	char str[] = "Hello";  sizeof(str)=6  --数组的长度加上结束标识\0
+	char* p = str;   sizeof(p)=8        --p是一个指针，占八个字节
+	int n = 10;   sizeof(n)=4           --整形占四个字节
+	char str[100];   sizeof(str)=100    --数组的长度100，若修改为int就是400
+5:#include<xxx>和#include"xxx.h"有什么区别？ 
+	 <> 指定的文件编译器会到系统的include目录中寻找   
+	 ""指定的文件则先在当前路径寻找,找不到时再到系统include路径中寻找
+6:new delete与malloc free的联系与区别？用new写一个不抛出异常的语句。
+  	1、malloc和free是C语言标准函数库中的两个函数，new/delete是C++语言中两个运算符。
+
+  	2 、malloc/free和new/delete都是用来申请动态内存的。
+
+	3、new 不止是分配内存，而且会调用类的构造函数，同理delete会调用类的析构函数，而malloc则只分配内存，不会进行初始化类成员的工作，同样free 也不会调用析构函数。
+
+	4、malloc得到的指针无类型，new出来的指针是带有类型信息的。
+
+	5、对于非内部数据类型的对象而言，光用maloc/free无法满足动态对象的要求。对象在创建的同时 要自动执行构造函数，对象在消亡之前要自动执行析构函数。由于malloc/free是库函数而不是运算符，不在编译器控制权限之内，不能够把执行构造函数和析构函数的任务强加于malloc/free。
+
+	6、如果用free释放“new创建的动态对象”，那么该对象因无法执行析构函数而可能导致程序出错。如 果用delete释放“malloc申请的动态内存”，理论上讲程序不会出错，但是该程序的可读性很差。所以new/delete 必须配对使用，malloc/free也一样。
+7:请写出下面几个表达式的结果，答案可以用10进制或16进制书写。
+	0x21 | 0x55  或运算
+	15 & 240     与运算
+	10 ^ 12      异或运算
+	(int)((signed char)(-2)>>1)  右移
+	(int)((unsigned char)(254)>>1) 右移
+
+	答案如下:117,0,6,-1,127
+
+8:将二进制数110101011000转换成八进制和十六进制。
+	 十六进制以四个为单位，以0x开头  0xD58
+	 八进制以0开头   06530
+
+9:请列举标准c/c++基本变量类型和它们的字节长度。 
+   16位编译器
+	char ：1个字节
+	char*(即指针变量): 2个字节
+	short int : 2个字节
+	int：  2个字节
+	unsigned int : 2个字节
+	float:  4个字节
+	double:   8个字节
+	long:   4个字节
+	long long:  8个字节
+	unsigned long:  4个字节
+
+
+
+	32位编译器
+	char ：1个字节
+	char*（即指针变量）: 4个字节（32位的寻址空间是2^32, 即32个bit，也就是4个字节。同理64位编译器）
+	short int : 2个字节
+	int：  4个字节
+	unsigned int : 4个字节
+	float:  4个字节
+	double:   8个字节
+	long:   4个字节
+	long long:  8个字节
+	unsigned long:  4个字节
+
+
+	64位编译器
+	char ：1个字节
+	char*(即指针变量): 8个字节
+	short int : 2个字节
+	int：  4个字节
+	unsigned int : 4个字节
+	float:  4个字节
+	double:   8个字节
+	long:   8个字节
+	long long:  8个字节
+	unsigned long:  8个字节
+ 破晓互动
+ 1:如何避免内存泄漏，如何查找内存泄漏。 
+
+	    1、一帧帧的加载游戏资源。
+		2、减少绘制调用。使用CCSpriteBatchNode
+		3、按照最大到最小的顺序的加载纹理
+		4、避开内存使用高峰、
+		5、使用加载界面来预加载游戏资源。
+		6、当不需要的时候释放无用的资源
+		7、当有内存警告的时候释放缓存的资源
+		8、使用texturePacker来优化纹理尺寸，格式，色彩深度值等等。
+		9、小心使用JPG文件
+		10、使用16位RBGA4444色彩深度的纹理
+		11、使用NPOT纹理代替POT纹理
+		12、避开加载大尺寸图片
+		13、使用1024*1024 NPOT pvr.ccz纹理图集而不是原生图片
+		   Xcode instrument, VS VLD. 使用教程网址
+		   http://blog.csdn.net/tonny_guan/article/details/40926771
+		   更加高级的调试可以参考
+		   http://www.cocoachina.com/bbs/read.php?tid=195644
+		   
+ 2:列举Cocos2dx内常用设计模式，并举例说明。
+   （1）单例模式：Director,FileUtils,UserDefaults等等
+   （2）观察者模式：NotificationCenter,EventDispatcher
+    (3) 工厂模式：精灵等的创建
+   （4）二段式：scene函数的内部实现
+ 3:简述Action的父类及子类继承结构和用途。
+   Action的三个子类，FinateAction,Follow,Speed 
+ 4:减少内存开销的方法有哪些？图片压缩的方法有哪些？
+        在2D游戏中图片无疑是最为重要的资源文件，它会被加载到内存中转换为纹理，由GPU贴在精灵之上渲染出来。它能够优化的方面很多，包括：图片格式、拼图和纹理格式等，下面我们从这几个方面介绍一下图片和纹理的优化。
+		1.选择图片格式
+		要回答这个问题，我们需要先了解一下目前在移动平台所使用的图片文件格式，以及这些图片格式Cocos2d-x是否支持。图片格式有很多，但是在移动平台主要推荐使用的PNG，JPG也可以考虑，而其它的文件格式最好转化成为PNG格式。我们先了解一下它们的特点。
+		1、PNG文件
+		PNG文件格式设计目的是替代GIF和TIFF文件格式，是一种位图存储格式。PNG是采用无损压缩，可以有Alpha通道数据支持透明，但不支持动画。PNG可以保存高保真的较复杂的图像，但是文件比较大。PNG格式具体又分为：PNG8和PNG24，后面的数字则是代表这种PNG格式最多可以索引和存储的颜色值。
+		2、JPG
+		JPG全名是JPEG。JPG图片以 24 位颜色存储单个位图图形。JPG是与平台无关的格式，支持最高级别的压缩，压缩比率可以高达 100:1，这种压缩是以牺牲图像质量为代价的，换取更小文件大小。JPG不支持透明。JPG比较支持摄影图像或写实图像作品，这是因为它们颜色比较丰富。而对于所含颜色很少、具有大块颜色相近的区域或亮度差异十分明显的较简单的图片，JPG就不太适合了。
+		那么我们选择JPG还是PNG呢?很多人认为JPG文件比较小，PNG文件比较大，加载到内存纹理，JPG占有更少的内存。这种观点是错误的！纹理与图片是不同的两个概念，如果纹理是野营帐篷话，那么图片格式是收纳折叠后的帐篷袋子，装有帐篷的袋子大小，不能代表帐篷搭起来后的大小。特别是在Cocos2d-x平台JPG加载后被转化为PNG格式，然后再转换为纹理，保存在内存中，这样无形中增加了对JPG文件解码的时间，因此无论JPG在其它平台表现的多么不俗，但是在移动平台下一定它无法与PNG相提并论。 
+
+        优化方向：
+		一、引擎底层优化：cocos2dx版本选择
+		二、纹理优化:png格式，一个像素4字节
+		1.二的幂次方拼图：由于底层的opengl是按二的幂次方申请内存的，然后再吧这个图片存在内存中，如果
+		一个480*480*4的图片要存入内存，那么它的实际占用内存是512*512*4。所以为节约内存，我们的图片大小
+		最好按二的幂次方制作（拼图法）。
+		2.色深优化：颜色模式的转换等
+		每个像素的深度由：A8R8G8B8转换为A1R5G5B5或者ARGB4444等，这样一个像素占的大小就由32位变成了16位
+		3.图片压缩格式：在IOS上的PowerVR显示芯片可以直接读取PVR格式的图片，效率更高！PVR格式其实就是A1R5G5B5模式
+		4.骨骼动画：cocos2dx2.03已经开始支持骨骼动画，cososbuilder2.1及之后的版本都可支持骨骼动画编辑。
+		RGB565图片常用于背景图和用户控件图。
+		三、渲染优化
+		1.精灵表方式：CCSpriteBatchNode
+		四、资源缓存
+		1.精灵帧缓存：CCSpriteFrameCache
+		2.纹理缓存：CCTextureCache
+		将不用的资源移出缓存，减少手机负荷
+		五、内存池：在游戏启动时申请一块大的内存，以后所有的资源占用空间都从该内存池中分配。避免了频繁申请和释放资源引起的
+		内存碎片化。内存池中的资源释放时只需要做个标记，后来加载的资源直接覆盖这片内存即可。
+ 5:cache机制原理是什么？ 
+ 	将纹理加载到内存，并且有对应的文件名称key，再次使用的时候，首先去查找对应的key，找到直接使用，找不到就再去文件加载。
+
+ 6:cocos2d-x的图形渲染机制是什么？
+      从Cocos2d-x3.0开始，Cocos2d-x引入了新的渲染流程，它不像2.x版本直接在每一个node中的draw函数中直接调用OpenGL代码进行图形渲染，而是通过各种RenderCommand封装起来，然后添加到一个CommandQueue队列里面去，而现在draw函数的作用就是在此函数中设置好相对应的RenderCommand参数，然后把此RenderCommand添加到CommandQueue中。最后在每一帧结束时调用renderer函数进行渲染，在renderer函数中会根据ID对RenderCommand进行排序，然后才进行渲染。
+      具体流程如下网址所示：
+      http://www.2cto.com/kf/201409/336234.html
+
+
+ 7:autorelease和release的区别？ 
+	 在cocos2dx中，内存管理采用的技术机制，并不是new完之后下一步就delete，它的管理方式是在new了之后，我们需要对它进行计数加1直至这个计数为0的时候，我们才delete掉它。
+	release是在retain后，调用release即刻将计数减1,直至为0的时候，我们才delete掉它。
+	autorelease却不是这样的，在调用了autorelease之后，它将该对象添加到AutoReleasePool,当下一针的时候，进行对应的释放。
+
